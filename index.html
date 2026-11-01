@@ -39,7 +39,8 @@ function foodUnitFamily(s){
 }
 function catalogMatch(query){
   const {clean,qty,unit}=foodQueryParts(query);
-  if(!clean||!Number.isFinite(qty)||qty<=0||qty>100)return null;
+  const maxQty=/^(?:g|grams?|oz|ounces?)$/.test(unit)?5000:unit==='kg'?5:100;
+  if(!clean||!Number.isFinite(qty)||qty<=0||qty>maxQty)return null;
   let best=null;
   for(const food of foodDB){
     if(!foodTerms(food).includes(clean))continue;
