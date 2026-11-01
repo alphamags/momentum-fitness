@@ -17,7 +17,7 @@ function smartEstimateFood(raw){
     serving,assumptions,amount,confidence
   });
   // Multiple separately named foods are estimated individually, then combined.
-  const segments=q.split(/\s+(?:and|plus|with a side of|alongside)\s+/).map(x=>x.trim()).filter(Boolean);
+  const composite=q.replace(/\s+with\s+(?=(?:white\s+|brown\s+)?rice\b|naan\b|roti\b|fries\b|salad\b|soup\b|potatoes\b|toast\b)/g,' and ');const segments=/\b(coffee|espresso|americano|latte|cappuccino)\b/.test(q)?[q]:composite.split(/\s+(?:and|plus|with a side of|alongside)\s+/).map(x=>x.trim()).filter(Boolean);
   if(segments.length>1 && segments.length<=5){
     const parts=segments.map(p=>smartEstimateFood(p));
     if(parts.every(Boolean)){
